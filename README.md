@@ -76,5 +76,3 @@ A **PowerShell script** was developed to:
 ## License
 This project is open-source. Feel free to contribute and improve it!
 
----
-Feel free to update the repository with relevant scripts and documentation. 🚀
