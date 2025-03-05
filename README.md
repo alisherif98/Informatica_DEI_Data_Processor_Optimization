@@ -27,28 +27,26 @@ These parameters (`BTW_1`, `BTW_2`) were updated dynamically during execution.
 
 ### 3. PowerShell Automation
 A **PowerShell script** was developed to:
-- Read **total row count** from a file.
+- Read **total row count** from a file (`Total_Rows.txt`).
 - Calculate **batch size** using the **Ceiling function**.
-- Generate **XML parameter files** for each batch.
+- Generate **XML parameter files** dynamically for each batch.
 - Execute **Informatica Mapping** via `infacmd.bat`.
-- Merge **all XML files** into a final consolidated XML.
+- Wait for batch processing to complete and rename output files.
+- Merge **all XML output files** into a final consolidated XML (`Final_Out_DP.xml`).
+- Clean up temporary files after execution.
 
-#### Key PowerShell Features:
-- **Dynamic Batch Calculation:**
-  ```powershell
-  $incrementValue = [math]::Ceiling($totalRows / $batchCount)
-  ```
-- **Triggering Informatica Mapping Execution:**
-  ```powershell
-  Invoke-Expression "infacmd.bat ... -paramFile batchParams.xml"
-  ```
-- **Parallel Execution Optimization (Future Improvement):**
-  Implementing **parallel processing** to speed up execution further.
-
-## Results
-✅ Fully **automated** the ETL process.
-✅ Efficiently processed **large datasets** while overcoming Informatica's buffer limitation.
-✅ Potential for **parallel execution** to enhance performance.
+#### PowerShell Execution Flow:
+1. Read the total row count from `Total_Rows.txt`.
+2. Calculate batch sizes dynamically based on the number of iterations.
+3. Generate an XML parameter file (`myparam_ali.xml`) with updated `BTW_1` and `BTW_2` values.
+4. Execute the Informatica mapping with the generated parameter file:
+   ```powershell
+   Invoke-Expression "C:\Informatica\10.4.0\clients\DeveloperClient\infacmd\infacmd.bat ms RunMapping -dn INFA_DOM -sn Data_Integration_Service -un ali.sherif -pd ali.sherif123 -a APP_DP -m MID_DP -pf myparam_ali.xml"
+   ```
+5. Wait for the output file (`OUTPUT_FILE.out`) to appear and rename it with the batch number.
+6. Repeat for all iterations, updating the parameter values dynamically.
+7. Merge all generated output files into a final XML file (`Final_Out_DP.xml`).
+8. Cleanup temporary files to keep the workspace clean.
 
 ## Repository Structure
 ```
@@ -61,13 +59,14 @@ A **PowerShell script** was developed to:
 ```
 
 ## How to Run
-1. Update **database connection details** in `data_processing.sql` and execute the script.
-2. Modify `process_batches.ps1` with correct paths and parameters.
-3. Run the PowerShell script:
+1. Ensure the **database connection details** are configured correctly.
+2. Modify `process_batches.ps1` with appropriate paths and credentials.
+3. Place `Total_Rows.txt` in the correct directory with the total row count.
+4. Execute the PowerShell script:
    ```powershell
    ./process_batches.ps1
    ```
-4. The final merged XML file will be available in the `output/` directory.
+5. After successful execution, the final merged XML will be available in `DP_OUTPUT/Final_Out_DP.xml`.
 
 ## Future Enhancements
 - Implement **parallel processing** for faster execution.
@@ -77,3 +76,5 @@ A **PowerShell script** was developed to:
 ## License
 This project is open-source. Feel free to contribute and improve it!
 
+---
+Feel free to update the repository with relevant scripts and documentation. 🚀
