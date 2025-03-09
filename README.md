@@ -48,7 +48,7 @@ A **PowerShell script** was developed to:
 7. Merge all generated output files into a final XML file (`Final_Out_DP.xml`).
 8. Cleanup temporary files to keep the workspace clean.
 
-```
+
 
 ## How to Run
 1. Ensure the **database connection details** are configured correctly.
