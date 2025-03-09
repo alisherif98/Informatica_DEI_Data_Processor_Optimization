@@ -48,14 +48,6 @@ A **PowerShell script** was developed to:
 7. Merge all generated output files into a final XML file (`Final_Out_DP.xml`).
 8. Cleanup temporary files to keep the workspace clean.
 
-## Repository Structure
-```
-📂 Project Root
-│── 📜 README.md  # Documentation
-│── 📜 data_processing.sql  # SQL Script for ROW_NUMBER() logic
-│── 📜 process_batches.ps1  # PowerShell script for automation
-│── 📜 batch_params.xml  # Sample XML parameter file
-│── 📂 output/  # Folder containing generated XML files
 ```
 
 ## How to Run
